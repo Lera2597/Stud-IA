@@ -1,0 +1,58 @@
+
+/*  Header */
+.header_container{
+    /* border: solid 1px black; */
+    background-color: rgb(48, 18, 18);
+
+}
+.logo{
+    padding: 0px;
+    text-align: center;
+}
+.title{
+    display: none;
+}
+
+nav ul{
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    gap:15px ;
+    padding: 20px;
+}
+nav ul li a{
+    background-color: rgb(58, 42, 42);
+    border-radius: 20px;
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    padding: 10px;
+}
+nav ul li a:hover{
+    background-color: #14B4FB;
+    color: white;
+    transform: scale(1.5);
+    /* agregarle negrita*/
+    font-weight: bold;
+}
+/* Cards */
+.card{
+    border: solid 1px black;
+    border-radius: 20px;
+    text-align: center;
+    padding: 10px;
+    max-width: 300px;
+}
+.card:hover{
+    background-color: #7b8c94;
+    color: white;
+    transform: scale(1.2);
+    /* agregarle negrita*/
+    font-weight: bold;
+}
+.card img{
+    border-radius: 20px;
+}
+.card h2{
+    padding: 10px;
+    text-transform: uppercase;
+}

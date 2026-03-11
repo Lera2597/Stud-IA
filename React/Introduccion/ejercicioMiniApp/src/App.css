@@ -1,0 +1,14 @@
+*{
+  background-color: rgb(247, 241, 234);
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.peliculas{
+  /* border: solid 1px black; */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}

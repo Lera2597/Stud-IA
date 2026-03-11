@@ -1,0 +1,42 @@
+header{
+    background-color: rgb(177, 149, 149);
+    color: rgb(0, 0, 0);
+    text-align: center;
+    padding: 10px;
+}
+main{
+    background-color: rgb(75, 111, 167);
+    color: rgb(0, 0, 0);
+    padding: 0px;
+}
+
+.contenedor-1{
+    background-color: rgb(75, 111, 167);
+    border: solid 1px rgb(0, 0, 0);
+    margin: 10px;
+    padding: 0px;
+
+}
+.contenedor-1 div{
+    background-color: rgb(216, 117, 25);
+    margin: 5px;
+}
+.contenedor-2{
+    background-color: rgb(75, 111, 167);
+    color: rgb(0, 0, 0);
+    border: solid 1px rgb(0, 0, 0);
+
+    padding: 0px;
+}
+.contenedor-3{
+    background-color: rgb(75, 111, 167);
+    color: rgb(0, 0, 0);
+    border: solid 1px rgb(0, 0, 0);
+
+    padding: 0px;
+}
+footer{
+    background-color: rgb(194, 59, 122);
+    color: rgb(0, 0, 0);
+    padding: 0px;
+}

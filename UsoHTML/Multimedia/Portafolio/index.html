@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <h1> Mis proyectos de electrónica </h1>
+    </header>
+    <main>
+        <p>Soy Ingeniero Electrónico, me gusta la programación y desarrollar proyectos de electrónica, asi
+            que aqui te dejo algunos de mis proyectos:</p>
+        <!-- imagenes -->
+        <section>
+            <picture>
+                <source media="(min-width: 650px)" srcset="assets\images\nicolas-thomas-3GZi6OpSDcY-unsplash.jpg">
+                <source media="(min-width: 465px)" srcset="assets\images\sahand-babali-gavODTHG36Y-unsplash.jpg">
+                <img src="assets\images\umberto-jXd2FSvcRr8-unsplash.jpg" alt="Imagen" style="width: 300px; height: 200px;">
+            </picture>
+
+            <picture>
+                <source media="(min-width: 465px)" srcset="assets\images\umberto-jXd2FSvcRr8-unsplash.jpg">
+                <source media="(min-width: 650px)" srcset="assets\images\nicolas-thomas-3GZi6OpSDcY-unsplash.jpg">
+                <img src="assets\images\sahand-babali-gavODTHG36Y-unsplash.jpg" alt="Imagen" style="width: 300px; height: 200px;">
+            </picture>
+        </section>
+
+        <!-- video  -->
+        <section>
+            <p> Tambien te dejo un video de como se desarrolla un sistema de seguridad electrónico, el cual
+                se basa en un microcontrolador de 32 bits: </p>
+            <video width="320" height="240" controls>
+                <source src="assets\video\file_example_MP4_480_1_5MG.mp4" type="video/mp4">
+                <source src="assets\video\file_example_OOG_1MG.ogg" type="video/ogg">
+                Your browser does not support the video tag.
+            </video>
+        </section>
+
+        <!-- svg -->
+        <section>
+            <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+                <!-- Cara -->
+                <circle cx="100" cy="100" r="80" fill="#ffdd67" stroke="#000" stroke-width="2"/>
+                <!-- Ojo izquierdo -->
+                <circle cx="70" cy="80" r="10" fill="#000"/>
+                <!-- Ojo derecho -->
+                <circle cx="130" cy="80" r="10" fill="#000"/>
+                <!-- Sonrisa -->
+                <path d="M 60 110 Q 100 140 140 110" 
+                        stroke="#000" stroke-width="3" fill="none"/>
+            </svg>
+            
+        </section>
+
+        <!-- audio  -->
+        <audio controls>
+            <source src="assets\audio\file_example_OOG_1MG.ogg" type="audio/ogg">
+            <source src="assets\audio\file_example_MP3_1MG.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </main>
+    <footer>
+        <ul>
+            <li><a href="">linkedin</a></li>
+            <li><a href="">github</a></li>
+        </ul>
+        <p> &copy; 2026 Mis proyectos de electrónica </p>
+    </footer>
+</body>
+</html>
