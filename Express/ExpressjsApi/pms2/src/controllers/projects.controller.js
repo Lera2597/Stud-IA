@@ -1,35 +1,15 @@
-const projects =  [
-    {
-        id:1,
-        name:"Website design",
-        status:"active",
-        description:"Website design and development"
-    },
-    {
-        id:2,
-        name:"Mobile App design",
-        status:"planning",
-        description:"Mobile App design and development"
-    }
-]
-
+const projectsService = require("../services/projects.service")
 // devolre todos los proyectos
 const  getProjects = async (req, res) => {
-    //throw new Error("Test error");//solo para probar el middleware
-    const projects = await req.app.locals.db.all("SELECT * FROM projects");
+    const projects = await projectsService.getAllProjects(req.app.locals.db);
     res.json(projects);
 }
 
 const getProjectById = async (req,res)=>{
-    const id = parseInt(req.params.id);
-    // const project = projects.find(p => p.id === id);
-    // if(!project){
-    //     res.status(404).json({message:"Project not found"});
-    // }
-    // res.json(project);
+    const id = parseInt(req.params.id)
     try
     {
-        const project = await req.app.locals.db.get("SELECT * FROM projects WHERE id = ?", [id]);
+        const project = await projectsService.getProjectById(req.app.locals.db, id);
         if(!project){
             res.status(404).json({message:"Project not found"});
         }
@@ -42,61 +22,19 @@ const getProjectById = async (req,res)=>{
 }
 
 const createProject = async (req, res) => {
-    const {name, status,description} = req.body;
-
-    // const newProject = {
-    //     id: projects.length + 1,
-    //     name,
-    //     status,
-    //     description
-    // }
-    // projects.push(newProject);
-    // res.status(201).json(newProject);
-
-    const result = await req.app.locals.db.run(
-            "INSERT INTO projects (name, status, description) VALUES (?, ?, ?)",
-            [name, status, description]
-        ); //parameter binding
-    
-    res.status(201).json({id: result.lastID, name, status, description});
+    const project = await projectsService.createProject(req.app.locals.db, req.body);
+    res.status(201).json(project);// status 201: recurso creado
 }
 
 const updateProject = async(req, res) => {
-    // const id = parseInt(req.params.id);
-    // const project = projects.find(p => p.id === id);
-    // if(!project){
-    //     res.status(404).json({message:"Project not found"});
-    // }
-    // const {name, status, description} = req.body;
-    // project.name = name || project.name;// sino hay name en el cuerpo de la peticion, se usa el name del proyecto 
-    // project.status = status || project.status;// sino hay status en el cuerpo de la peticion, se usa el status del proyecto
-    // project.description = description || project.description;// sino hay description en el cuerpo de la peticion, se usa la description del proyecto
-    // res.json(project);
-
-    const {id} = req.params
-    const { name, description, status} = req.body
-
     try{
-        if(isNaN(id)){
-            return res.status(400).json({Messge:"Invalid Id"})
-        }
-        const result = await req.app.locals.db.run(
-            `UPDATE projects 
-            SET name=? ,description=?, status=?
-            WHERE id=?
-            `,
-            [name,description,status,id]
-        )
-        if(result.changes === 0)
+        const id = parseInt(req.params.id);
+        const project = await projectsService.updateProject(req.app.locals.db, id, req.body);
+        if(!project)
         {
             return res.status(404).json({Message:"Project no found"})
         }
-
-        const updateProject = await req.app.locals.db.get(
-            `SELECT * FROM projects WHERE id=?`,
-            [id]
-        )
-        res.json(updateProject)
+        res.status(200).json(project)
     }
     catch (error) {
         res.status(500).json({message:error.messageessage})
@@ -105,29 +43,14 @@ const updateProject = async(req, res) => {
 
 
 const deleteProject = async (req, res) => {
-    // const id = parseInt(req.params.id); // obtener el id de la peticion
-    // const index = projects.findIndex(p => p.id === id);
-    // if(index === -1){
-    //     res.status(404).json({message:"Project not found"});
-    // }
-    // const deletedProject = projects.splice(index, 1);
-    // res.json({message:"Project deleted",
-    //     project: deletedProject[0]
-    // });
-    const {id} = req.params
     try{
-        if(isNaN(id)){
-            return res.status(400).json({Messge:"Invalid Id"})
-        }
-        const result = await req.app.locals.db.run(
-            `DELETE FROM projects WHERE id=?`,
-            [id]
-        )
-        if(result.changes === 0)
+        const id = parseInt(req.params.id);
+        const project = await projectsService.deleteProject(req.app.locals.db, id);
+        if(!project)
         {
             return res.status(404).json({Message:"Project no found"})
         }
-        res.status(204).send()
+        res.status(200).json({message:"Project deleted", project})
     }
     catch (error) {
         res.status(500).json({message:error.messageessage})
