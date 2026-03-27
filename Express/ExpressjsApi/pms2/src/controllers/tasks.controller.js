@@ -1,70 +1,73 @@
-let tasks = [
+const tasksService = require("../services/tasks.service");
+
+const getAllTasks  = async (req, res) =>  {
+    const tasks = await tasksService.getAllTasks(req.app.locals.db);
+    res.status(200).json(tasks);
+}
+
+const getTasksByProject = async(req, res) => {
+    try {
+        const projectId = parseInt(req.params.projectId);
+        const projectTasks = await tasksService.getTasksByProject(req.app.locals.db, projectId);
+        if(!projectTasks){
+            res.status(404).json({message:"Project not found"});
+        }
+        res.status(200).json(projectTasks);
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
+}
+
+const getTaskById = async(req, res) => {
+    try {
+        const id = parseInt(req.params.id);
+        console.log(id);
+        const task =  await tasksService.getTaskById(req.app.locals.db, id);
+        if(!task){
+            res.status(404).json({message:"Task not found"});
+        }
+        res.json(task);
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
+}
+const createTask = async(req, res) => {
+    try {
+        const newTask = { project_id: req.params.projectId, ...req.body };
+        const task =  await tasksService.createTask(req.app.locals.db, newTask);
+        res.status(201).json(task);
+    } catch (error) {
+        res.status(500).json({message: error.message});
+    }
+}
+
+const updateTask = async(req, res) => {
+    try
     {
-        id:1,
-        title:"Task 1",
-        project_id:1,
-        status:"active"
-    },
-    {
-        id:2,
-        title:"Task 2",
-        project_id:1,
-        status:"in_progress"
+        const id = parseInt(req.params.id);
+        const task =  await tasksService.updateTask(req.app.locals.db, id, req.body);
+        if(!task){
+            res.status(404).json({message:"Task not found"});
+        }
+        res.json(task);
     }
-    
-]
-
-const getTasksByProject = (req, res) => {
-    const projectId = parseInt(req.params.projectId);
-    const projectTasks = tasks.filter(
-        task => task.project_id === projectId
-    )
-    res.json(projectTasks);
-}
-
-const createTask = (req, res) => {
-    const {title, status} = req.body;
-    const newTask = {
-        id: tasks.length + 1,
-        title,
-        status,
-        project_id : parseInt(req.params.projectId)
-
+    catch (error) {
+        res.status(500).json({message: error.message});
     }
-    tasks.push(newTask);
-    res.status(201).json(newTask);// status 201: recurso creado
-}
-
-const getTaskById = (req, res) => {
-    const id = parseInt(req.params.id);
-    const task = tasks.find(t => t.id === id);
-    if(!task){
-        res.status(404).json({message:"Task not found"});
-    }
-    res.json(task);
-}
-
-const updateTask = (req, res) => {
-    const id = parseInt(req.params.id);
-    const task = tasks.find(t => t.id === id);
-    if(!task){
-        res.status(404).json({message:"Task not found"});
-    }
-    const {title, status} = req.body;
-    task.title = title || task.title;
-    task.status = status || task.status;
-    res.json(task);
 }
 
 const deleteTask = (req,res)=>{
-    const id= parseInt(req.params.id);
-    const index = tasks.findIndex(task => task.id === id);
-    if(index === -1){
-        res.status(404).json({message:"Task not found"});
+    try {
+        const id = parseInt(req.params.id);
+        const task =  tasksService.deleteTask(req.app.locals.db, id);
+        if(!task){
+            res.status(404).json({message:"Task not found"});
+        }
+        res.json(task);
+    } catch (error) {
+        res.status(500).json({message: error.message});
     }
-    const deletedTask = tasks.splice(index, 1);
-    res.json({message:"Task deleted", task: deletedTask[0]});
 
 }
 
-module.exports = {getTasksByProject, createTask, getTaskById, updateTask, deleteTask};
+module.exports = {getAllTasks, getTasksByProject, getTaskById, createTask, updateTask, deleteTask};
