@@ -70,4 +70,8 @@ const deleteTask = (req,res)=>{
 
 }
 
-module.exports = {getAllTasks, getTasksByProject, getTaskById, createTask, updateTask, deleteTask};
+const getCurrentUser = (req, res) => 
+    {
+        res.json({user: req.user});
+    }
+module.exports = {getAllTasks, getTasksByProject, getTaskById, createTask, updateTask, deleteTask, getCurrentUser};

@@ -2,10 +2,13 @@ const express = require("express");
 const app = express(); // crea una instancia de express
 app.use(express.json()); // para recibir json en las peticiones o sulicitudes al servidor
 
-const initDB = require("./database/db")
+const {initDB} = require("./database/db")
 
 const logger = require("./middleware/logger"); // se debe ejecutar antes de las rutas
 app.use(logger);
+
+const authRoutes = require("./auth/auth.routes");
+app.use("/api/auth", authRoutes);
 
 const projectsRoutes = require("./routes/projects.routes");
 app.use("/api/projects", projectsRoutes);

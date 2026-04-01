@@ -48,3 +48,27 @@ Logic de negocio
 
 Database
 Acceso a la base de datos
+
+## Autenticación
+
+creamos el modulo de autenticacion en un acarpeta independiente que reune las rutas, los controladores y el servicio
+
+Cliente -> login -> recibe el token -> use el token en los request -> API valida el token y da acceso
+
+### Json web token 
+jwt.sign()
+HEADER.PYLOAD.SIGNATURE
+Authorization: Bearer TOKEN
+
+## Autorización
+Es una segunda capad de seguridad que permite vlaidar el acceso a los recursos con mayor granulidad 
+
+Validación del toke -> validar los permisos
+
+Roles: Admin(todo), User(crear tareas), viewer (solo lectura)
+
+## Crear reglas de autorizacion
+Accion(funcion del controlador)
+crear tarea -> admin, user
+editar tarea -> admin, user
+eliminar tarea -> admin

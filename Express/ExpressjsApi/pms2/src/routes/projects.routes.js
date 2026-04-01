@@ -1,11 +1,12 @@
 const express = require("express");
 const router = express.Router();
 
-const {getProjects, getProjectById, createProject, updateProject, deleteProject
+const {getProjects, getProjectById, createProject, updateProject, deleteProject } = require("../controllers/projects.controller");
 
-} = require("../controllers/projects.controller");
-
+const authenticate = require("../middleware/auth");
+const authorize = require("../middleware/authorize");
 const validateProject = require("../middleware/validateProject");
+
 // Read
 router.get("/", getProjects);
 
@@ -13,12 +14,22 @@ router.get("/", getProjects);
 router.get("/:id", getProjectById);
 
 // Create
-router.post("/", validateProject, createProject);
+router.post(
+    "/", 
+    authenticate,
+    authorize(["admin", "manager"]), //solo los administradores y los managers pueden crear proyectos
+    validateProject, 
+    createProject
+);
 
 // Update
 router.put("/:id", updateProject);
 
 // Delete
-router.delete("/:id", deleteProject);
+router.delete(
+    "/:id",
+    authenticate,
+    authorize(["admin"]), // solo los administradores pueden borrar
+    deleteProject);
 
 module.exports = router;

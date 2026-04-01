@@ -28,7 +28,7 @@ async function initDB(){
                 email varchar(100) NOT NULL UNIQUE,
                 password varchar(250) NOT NULL,
                 created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-                role text CHECK(role IN ('admin', 'manager', 'agent'))
+                role TEXT default 'agent' CHECK(role IN ('admin', 'manager', 'agent'))
             );
 
             CREATE TABLE IF NOT EXISTS task (
@@ -46,5 +46,4 @@ async function initDB(){
         `)
     return db
 }
-module.exports = connectDB
-module.exports = initDB
+module.exports = {connectDB, initDB}
