@@ -74,4 +74,33 @@ const getCurrentUser = (req, res) =>
     {
         res.json({user: req.user});
     }
-module.exports = {getAllTasks, getTasksByProject, getTaskById, createTask, updateTask, deleteTask, getCurrentUser};
+
+// Endpoints para testear las funcionalidades de sort, filter, este endpoint  carga por defecto todas las tareas
+const listTasks = async(req, res) => {
+    try{
+        const {status, priority} = req.query;
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
+        const offset = (page - 1) * limit;
+        const sort = req.query.sort || "created_at";
+        
+        const queryParams = {status, priority, limit, offset, sort};
+        //console.log(status, priority);//
+        const tasks =  await tasksService.listTasks(req.app.locals.db, queryParams);
+        // console.log(tasks);
+        res.json(tasks);
+    }
+    catch (error) {
+        res.status(500).json({message: error.message});
+    }
+    
+
+}
+module.exports = {getAllTasks,
+    getTasksByProject, 
+    getTaskById,
+    createTask,
+    updateTask,
+    deleteTask,
+    getCurrentUser,
+    listTasks};

@@ -11,8 +11,8 @@ const getTaskById = async (db, id) => {
 
 const createTask = async (db, task) => {
     const result = await db.run(
-        "INSERT INTO tasks (title, description, project_id, assigned_to, status) VALUES (?, ?, ?, ?, ?)",
-        [task.title, task.description, task.project_id, task.assigned_to, task.status]
+        "INSERT INTO tasks (title, description, project_id, user_id, status,priority,due_date) VALUES (?, ?, ?, ?, ?)",
+        [task.title, task.description, task.project_id, task.user_id, task.status, task.priority, task.due_date]
     );
     return { id: result.lastID, ...task };
 }
@@ -34,6 +34,29 @@ const deleteTask = async (db, id) => {
     return task
 }
 
+const listTasks  = (db, queryParams) => {
+    const { status, priority, limit, offset, sort} = queryParams;
+    let query = "SELECT * FROM tasks WHERE 1=1";
+    let params = [];
+    //filtramos culumnas de la tabla tasks
+    if (status) {
+        query += " AND status = ?";
+        params.push(status);
+    }
+    if (priority) {
+        query += " AND priority = ?";
+        params.push(priority);
+    }
+    query += ` ORDER BY ${sort} DESC`;
+    
+    query += " LIMIT ? OFFSET ?";
+    params.push(limit, offset);
+    query += ";";
+    //console.log(query, params);
+    //const tasks = await db.all(query, params);
+    // console.log(tasks);
+    return db.all(query, params)
+}
 module.exports = {
     getAllTasks,
     getTasksByProject,
@@ -41,4 +64,5 @@ module.exports = {
     createTask,
     updateTask,
     deleteTask,
+    listTasks
 };

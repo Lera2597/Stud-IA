@@ -16,6 +16,10 @@ app.use("/api/projects", projectsRoutes);
 const tasksRoutes = require("./routes/task.routes");
 app.use("/api", tasksRoutes);
 
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("./docs/swagger");
+app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 //manejo de errores despues de ejecutar las rutas o todas las peticiones
 const errorHandler = require("./middleware/errorHandler");
 app.use(errorHandler);
@@ -31,4 +35,5 @@ initDB().then(database =>{
     });
 }).catch(err => {
     console.error("Error en la coneccion de la base datos")
+    console.error(err)
 })

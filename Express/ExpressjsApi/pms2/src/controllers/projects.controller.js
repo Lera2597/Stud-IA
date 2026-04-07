@@ -1,7 +1,15 @@
 const projectsService = require("../services/projects.service")
 // devolre todos los proyectos
 const  getProjects = async (req, res) => {
-    const projects = await projectsService.getAllProjects(req.app.locals.db);
+    const status = req.query.status
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const offset = (page - 1) * limit;
+    const sort = req.query.sort || "created_at";
+
+    const queryParams = {status, limit, offset, sort};
+
+    const projects = await projectsService.getAllProjects(req.app.locals.db, queryParams);
     res.json(projects);
 }
 

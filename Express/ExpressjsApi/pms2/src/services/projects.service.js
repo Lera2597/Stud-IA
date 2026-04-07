@@ -1,5 +1,25 @@
-const getAllProjects = async (db) => {
-    return db.all("SELECT * FROM projects");
+const getAllProjects = async (db, queryParams) => {
+    const { status, limit, offset, sort } = queryParams;
+    let query = "SELECT * FROM projects WHERE 1=1";
+    let params = [];
+    if (status) {
+        query += " AND status = ?";
+        params.push(queryParams.status);
+    }
+    query += ` ORDER BY ${sort} DESC`;
+
+    if (limit) {
+        query += " LIMIT ?";
+        params.push(queryParams.limit);
+    }
+    if (offset) {
+        query += " OFFSET ?";
+        params.push(queryParams.offset);
+    }
+    query += ";";
+    //console.log(query, params);
+    
+    return db.all(query, params);
 }
 const getProjectById = async (db, id) => {
     return db.get("SELECT * FROM projects WHERE id = ?", [id]);

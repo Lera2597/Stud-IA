@@ -31,17 +31,19 @@ async function initDB(){
                 role TEXT default 'agent' CHECK(role IN ('admin', 'manager', 'agent'))
             );
 
-            CREATE TABLE IF NOT EXISTS task (
-                id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+            CREATE TABLE IF NOT EXISTS tasks (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
                 project_id INTEGER NOT NULL,
-                assigned_to INTEGER NOT NULL,
+                user_id INTEGER NOT NULL,
                 title VARCHAR(200) NOT NULL,
                 description VARCHAR(100),
                 status TEXT DEFAULT 'todo' CHECK(status IN ('todo', 'in_progress', 'done')),
                 priority TEXT DEFAULT 'low' CHECK(priority IN ('low', 'medium', 'high', 'critical')),
+                due_date TIMESTAMP,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (project_id) REFERENCES projects(id),
-                FOREIGN KEY (assigned_to) REFERENCES users(id)
+                FOREIGN KEY (user_id) REFERENCES users(id)
             );
         `)
     return db
