@@ -14,6 +14,35 @@ router.get("/", getProjects);
 router.get("/:id", getProjectById);
 
 // Create
+/**
+ * @openapi
+ * /projects:
+ *   post:
+ *     summary: Create project
+ *     description: Create a new project
+ *     tags:
+ *       - Projects
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               status:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               required:
+ *                 - name
+ *     responses:
+ *       201:
+ *         description: Project created 
+ */
 router.post(
     "/", 
     authenticate,
