@@ -46,7 +46,7 @@ router.get("/:id", getProjectById);
 router.post(
     "/", 
     authenticate,
-    authorize(["admin", "manager"]), //solo los administradores y los managers pueden crear proyectos
+    authorize(["admin", "manager","agent"]), //solo los administradores y los managers pueden crear proyectos
     validateProject, 
     createProject
 );
@@ -58,7 +58,7 @@ router.put("/:id", updateProject);
 router.delete(
     "/:id",
     authenticate,
-    authorize(["admin"]), // solo los administradores pueden borrar
+    authorize(["admin","agent"]), // solo los administradores pueden borrar
     deleteProject);
 
 module.exports = router;

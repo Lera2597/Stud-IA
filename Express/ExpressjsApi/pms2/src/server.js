@@ -1,6 +1,11 @@
 const express = require("express");
+const cors = require("cors");
+
 const app = express(); // crea una instancia de express
+
+
 app.use(express.json()); // para recibir json en las peticiones o sulicitudes al servidor
+app.use(cors());
 
 const {initDB} = require("./database/db")
 

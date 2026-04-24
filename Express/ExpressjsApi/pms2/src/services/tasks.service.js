@@ -11,8 +11,8 @@ const getTaskById = async (db, id) => {
 
 const createTask = async (db, task) => {
     const result = await db.run(
-        "INSERT INTO tasks (title, description, project_id, user_id, status,priority,due_date) VALUES (?, ?, ?, ?, ?)",
-        [task.title, task.description, task.project_id, task.user_id, task.status, task.priority, task.due_date]
+        "INSERT INTO tasks (title, description, project_id, user_id, status) VALUES (?, ?, ?, ?, ?)",
+        [task.title, task.description, task.project_id, task.user_id, task.status]
     );
     return { id: result.lastID, ...task };
 }
