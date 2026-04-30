@@ -8,7 +8,7 @@ const registerUser = async (db, data) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     const userRole = role || "agent";
     const result = await db.run(
-        "INSERT INTO users (name, email, password) VALUES (?, ?, ?, ?)",
+        "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)",
         [name, email, hashedPassword, userRole]
     ); //parameter binding
     

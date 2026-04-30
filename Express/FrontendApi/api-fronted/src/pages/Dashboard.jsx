@@ -3,6 +3,9 @@ import { useState,useEffect } from "react"
 import client from "../api/client"
 import { useNavigate } from "react-router-dom"
 
+import { AuthContext } from "../context/AuthContext"
+import { useContext } from "react"
+
 
 const Dashboard = () => {
     const [projects , setProjects] = useState([])
@@ -11,6 +14,8 @@ const Dashboard = () => {
     const [description , setDescription] = useState('')
 
     const navigate = useNavigate()
+
+    const {user} = useContext(AuthContext)
 
     const handleCreateProject = async () => {
         try {
@@ -87,12 +92,16 @@ const Dashboard = () => {
                             >
                                 Ver Tareas
                             </button>
-                            <button
-                                className="btn btn-danger"
-                                onClick={()=> handleDelete(project.id)}
-                            >
-                                Eliminar
-                            </button>
+                            {/* renderizado condicional */}
+                            {user?.role === 'admin' && (
+                                <button
+                                    className="btn btn-danger"
+                                    onClick={()=> handleDelete(project.id)}
+                                >
+                                    Eliminar
+                                </button>
+                            )}
+                            
                         </div>
                     </div>
                 ))}

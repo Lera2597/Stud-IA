@@ -3,3 +3,15 @@ body{
     color: #fff;
     font-family: '"inter", sans-serif';
 }
+.todo {
+    border-left: 4px solid #6b7280;
+}
+.in_progress {
+    border-left: 4px solid #f59e0b;
+}
+.done { 
+    border-left: 4px solid #10b981;
+}
+.pending {
+    border-left: 4px solid #ef4444;
+}

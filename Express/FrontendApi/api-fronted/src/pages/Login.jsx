@@ -1,11 +1,14 @@
 import { useState } from "react"
 import client from "../api/client"
 import { useNavigate } from "react-router-dom"
+import { AuthContext } from "../context/AuthContext"
+import { useContext } from "react"
+
 const Login = () => {
     const [email , setEmail] = useState('')
     const [password , setPassword] = useState('')
     const navigate = useNavigate()
-
+    const {login} = useContext(AuthContext)
 
     const hadleLogin = async (e) => {
         e.preventDefault()
@@ -13,9 +16,12 @@ const Login = () => {
             const response = await client.post('/auth/login' , {email , password})
             // console.log(response.data)
             const token = response.data.token
-            localStorage.setItem('token' , token)
-            console.log(localStorage.getItem('token'))
+
+            //localStorage.setItem('token' , token)
+            login(token)
+
             navigate('/dashboard')
+            
             alert('Login Success')
         } catch (error) {
             alert('Login Failed', error)
