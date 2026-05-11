@@ -1,0 +1,6 @@
+Credenciales de prueba:
+   Email: superadmin@nextlms.com
+   Email: admin@acme.com
+   Email: instructor@acme.com
+   Email: maria@student.com
+   Password: password123
