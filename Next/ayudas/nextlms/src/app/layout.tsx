@@ -1,7 +1,10 @@
-import { JetBrains_Mono } from "next/font/google";
+import { JetBrains_Mono, Roboto_Slab } from "next/font/google";
 import "./globals.css";
 import type { ReactNode } from "react"
 import { AuthProvider } from "@/components/providers/session-provider"
+import { cn } from "@/lib/utils";
+
+const robotoSlab = Roboto_Slab({subsets:['latin'],variable:'--font-serif'});
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
@@ -12,7 +15,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="en"
-      className={`${jetbrainsMono.variable}`}
+      className={cn(jetbrainsMono.variable, "font-serif", robotoSlab.variable)}
     >
       <body>
         <AuthProvider>

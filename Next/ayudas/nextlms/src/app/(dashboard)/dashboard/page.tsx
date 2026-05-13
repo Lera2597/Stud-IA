@@ -67,8 +67,10 @@ import RecentActivity from "./components/RecentActivity"
 
 export default async function DashboardPage() {
     const session = await auth()
+    // console.log(session)
 
     if (!session?.user?.tenantId) {
+
       throw new Error("Usuario sin tenant asignado")
     }
 

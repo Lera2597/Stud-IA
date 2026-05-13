@@ -1,15 +1,33 @@
 import Link from "next/link"
+import getTenant from "@/lib/data/tenants"
 import { LayoutDashboard, BookOpen, Users, Settings } from "lucide-react"
+import { Separator } from "@/components/ui/separator"
 
-export function Sidebar() {
+import { auth } from "@/lib/auth"
+
+export async function Sidebar() {
+  const session = await auth()
+  if (!session?.user?.tenantId) {
+    throw new Error("Usuario sin tenant asignado")
+  }
+  // console.log("***SESSION", session)
+  const tenantId = session.user.tenantId
+  const tenant = await getTenant(tenantId)
+  // console.log("***TENANT", tenant)
   return (
     <aside className="w-64 border-r bg-background hidden md:flex flex-col">
 
       {/* LOGO */}
-      <div className="h-16 flex items-center px-6 font-bold text-lg">
+      <div className="mt-4 text-shadow-lg/30 flex justify-center px-6 font-bold text-lg">
         NextLMS Admin
       </div>
 
+      {/* TENANT */}
+      <div className="mb-4 text-shadow-lg flex justify-center text-sm">
+        {tenant?.name}
+      </div>
+
+      {/* <Separator /> */}
       {/* NAV */}
       <nav className="flex-1 px-4 space-y-1">
 

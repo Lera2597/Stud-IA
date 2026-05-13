@@ -5,13 +5,14 @@ import ModulesList from "./components/ModulesList"
 export default async function CourseDetailPage({
   params,
 }: {
-  params: { courseId: string }
+  params: Promise<{ courseId: string }>
 }) {
+  const resolveParams = await params
   const tenantId = await getTenantId()
 
   const course = await prisma.course.findFirst({
     where: {
-      id: params.courseId,
+      id: resolveParams.courseId,
       tenantId,
     },
     include: {
